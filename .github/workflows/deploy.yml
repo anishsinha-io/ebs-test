@@ -28,7 +28,7 @@ jobs:
       - run: docker build -t anishsinha1/lifeofanish-client ./client
       - run: docker build -t anishsinha1/lifeofanish-server ./server
 
-      - name: Generate deployment package
+      - name: generate deployment package
         run: zip -r deploy.zip . -x '*.git'
 
       - name: Deploy final to elastic beanstalk
