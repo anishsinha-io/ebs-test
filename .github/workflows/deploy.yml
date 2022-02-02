@@ -1,6 +1,9 @@
 name: "Deploy to EBS"
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   prepare-env:
