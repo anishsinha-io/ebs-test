@@ -20,7 +20,7 @@ jobs:
           file_name: .env.prod
   
   build-images:
-    name: build docker images
+    name: build docker images and deploy to ebs
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
