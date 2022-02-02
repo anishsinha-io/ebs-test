@@ -29,7 +29,7 @@ jobs:
       - run: docker build -t anishsinha1/lifeofanish-server ./server
 
       - name: generate deployment package
-        run: zip -r deploy.zip . -x '*.git'
+        run: zip -r deploy.zip *
 
       - name: Deploy final to elastic beanstalk
         uses: einaregilsson/beanstalk-deploy@v18
