@@ -3,26 +3,21 @@ services:
   postgres:
     image: postgres:14.1
     restart: always
-    volumes:
-      - "/Users/anishsinha/Home/docker/Volumes/postgresql/data:/var/lib/postgresql/data"
     ports:
       - 5432:5432
     environment:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
   client:
+    image: anishsinha1/lifeofanish-client
     stdin_open: true
-    build: ./client
     volumes: 
       - /app/node_modules
       - "./client:/app"
   api:
-    build: ./server
+    image: anishsinha1/lifeofanish-server
     restart: always
     depends_on:
       - postgres
-    volumes:
-      - /app/node_modules
-      - ./server:/app
     ports:
       - 8000:8000
     environment:

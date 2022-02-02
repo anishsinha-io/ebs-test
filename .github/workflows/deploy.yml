@@ -9,15 +9,42 @@ jobs:
   prepare-env:
     runs-on: ubuntu-latest
     steps:
-      - name: Create .env file
-        uses: SpicyPizza/create-envfile@v1.2
+      - name: create .env file
+      - uses: SpicyPizza/create-envfile@v1.2
         with:
-          envkey_POSTGRES_HOST: {{ secrets.POSTGRES_HOST }}
-          envkey_POSTGRES_PORT: {{ secrets.POSTGRES_PORT}}
-          envkey_POSTGRES_USER: {{ secrets.POSTGRES_USER }}
-          envkey_POSTGRES_PASSWORD: {{ secrets.POSTGRES_PASSWORD }}
-          envkey_POSTGRES_DATABASE: {{ secrets.POSTGRES_DATABASE }}
+          envkey_POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+          envkey_POSTGRES_PORT: ${{ secrets.POSTGRES_PORT}}
+          envkey_POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          envkey_POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          envkey_POSTGRES_DATABASE: ${{ secrets.POSTGRES_DATABASE }}
           directory: .
-          file_name: .env.dev
+          file_name: .env.prod
+  
+  build-images:
+    name: build docker images
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+      - run: docker build -t anishsinha1/lifeofanish-client ./client
+      - run: docker build -t anishsinha1/lifeofanish-server ./server
+
+      - name: Generate deployment package
+        run: zip -r deploy.zip . -x '*.git'
+
+      - name: Deploy final to elastic beanstalk
+        uses: einaregilsson/beanstalk-deploy@v18
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
+          application_name: lifeofanish
+          environment_name: lifeofanish-env
+          existing_bucket_name: elasticbeanstalk-us-east-1-697480332228
+          region: us-east-1
+          version_label: ${{ github.sha }}
+          deployment_package: deploy.zip
+
+
+
 
 
