@@ -1,0 +1,23 @@
+name: "Deploy to EBS"
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  prepare-env:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create .env file
+        uses: SpicyPizza/create-envfile@v1.2
+        with:
+          envkey_POSTGRES_HOST: {{ secrets.POSTGRES_HOST }}
+          envkey_POSTGRES_PORT: {{ secrets.POSTGRES_PORT}}
+          envkey_POSTGRES_USER: {{ secrets.POSTGRES_USER }}
+          envkey_POSTGRES_PASSWORD: {{ secrets.POSTGRES_PASSWORD }}
+          envkey_POSTGRES_DATABASE: {{ secrets.POSTGRES_DATABASE }}
+          directory: .
+          file_name: .env.dev
+
+
