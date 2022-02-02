@@ -9,7 +9,6 @@ jobs:
   prepare-env:
     runs-on: ubuntu-latest
     steps:
-      - name: create .env file
       - uses: SpicyPizza/create-envfile@v1.2
         with:
           envkey_POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
