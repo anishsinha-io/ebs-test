@@ -28,6 +28,12 @@ jobs:
       - run: docker build -t anishsinha1/lifeofanish-client:latest ./client 
       - run: docker build -t anishsinha1/lifeofanish-server:latest ./server
       - run: docker build -t anishsinha1/lifeofanish-nginx:latest ./nginx
+      - run: docker push anishsinha1/lifeofanish-client
+      - run: docker push anishsinha1/lifeofanish-server
+      - run: docker push anishsinha1/lifeofanish-nginx
+
+      - name: generate deployment package
+        run: zip -r deploy.zip *
 
       - name: Deploy final to elastic beanstalk
         uses: einaregilsson/beanstalk-deploy@v18
@@ -39,3 +45,4 @@ jobs:
           existing_bucket_name: elasticbeanstalk-us-east-1-697480332228
           region: us-east-1
           version_label: ${{ github.sha }}
+          deployment_package: deploy.zip
