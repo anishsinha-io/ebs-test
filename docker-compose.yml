@@ -10,9 +10,7 @@ services:
   client:
     image: anishsinha1/lifeofanish-client
     stdin_open: true
-    volumes: 
-      - /app/node_modules
-      - "./client:/app"
+
   api:
     image: anishsinha1/lifeofanish-server
     restart: always
