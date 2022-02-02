@@ -8,11 +8,11 @@ services:
     environment:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
   client:
-    image: anishsinha1/lifeofanish-client
+    image: anishsinha1/lifeofanish-client:1.0.1
     stdin_open: true
 
   api:
-    image: anishsinha1/lifeofanish-server
+    image: anishsinha1/lifeofanish-server:1.0.1
     restart: always
     depends_on:
       - postgres
@@ -26,7 +26,7 @@ services:
       - POSTGRES_HOST=${POSTGRES_HOST}
       - SERVER_PORT=${SERVER_PORT}
   nginx:
-    image: anishsinha1/lifeofanish-nginx
+    image: anishsinha1/lifeofanish-nginx:1.0.1
     depends_on:
       - api
       - client

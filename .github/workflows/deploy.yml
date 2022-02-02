@@ -28,9 +28,9 @@ jobs:
       - run: docker build -t anishsinha1/lifeofanish-client:latest ./client 
       - run: docker build -t anishsinha1/lifeofanish-server:latest ./server
       - run: docker build -t anishsinha1/lifeofanish-nginx:latest ./nginx
-      - run: docker push anishsinha1/lifeofanish-client
-      - run: docker push anishsinha1/lifeofanish-server
-      - run: docker push anishsinha1/lifeofanish-nginx
+      - run: docker push anishsinha1/lifeofanish-client:1.0.1
+      - run: docker push anishsinha1/lifeofanish-server:1.0.1
+      - run: docker push anishsinha1/lifeofanish-nginx:1.0.1
 
       - name: generate deployment package
         run: zip -r deploy.zip *
