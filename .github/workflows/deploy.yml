@@ -17,7 +17,7 @@ jobs:
           envkey_POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           envkey_POSTGRES_DATABASE: ${{ secrets.POSTGRES_DATABASE }}
           directory: .
-          file_name: .env.prod
+          file_name: .env
   
   build-images:
     name: build docker images and deploy to ebs
@@ -29,9 +29,6 @@ jobs:
       - run: docker build -t anishsinha1/lifeofanish-server:latest ./server
       - run: docker build -t anishsinha1/lifeofanish-nginx:latest ./nginx
 
-      - name: generate deployment package
-        run: zip -r deploy.zip *
-
       - name: Deploy final to elastic beanstalk
         uses: einaregilsson/beanstalk-deploy@v18
         with:
@@ -42,4 +39,3 @@ jobs:
           existing_bucket_name: elasticbeanstalk-us-east-1-697480332228
           region: us-east-1
           version_label: ${{ github.sha }}
-          deployment_package: deploy.zip
